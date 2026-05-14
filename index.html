@@ -7,7 +7,8 @@
 
   <style>
     :root {
-      --bg: #050505;
+      /* Absolute Black Background */
+      --bg: #000000;
       --card-bg: #0f0f0f;
       --header-bg: #161616;
       --text-main: #ffffff;
@@ -37,12 +38,14 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 20px;
+      overflow: hidden;
     }
 
     .calc-container {
-      width: 100%;
-      max-width: 900px; 
+      width: 98vw; 
+      max-width: 1200px;
+      height: auto;
+      max-height: 98vh;
       background: var(--card-bg);
       border-radius: 8px;
       border: var(--border);
@@ -50,11 +53,12 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      font-size: clamp(12px, 1.1vw, 16px); 
     }
 
     .header {
       background: var(--header-bg);
-      padding: 20px 25px;
+      padding: 1.5% 2.5%;
       display: flex;
       align-items: center;
       border-bottom: var(--border);
@@ -62,7 +66,7 @@
     }
 
     .header img {
-      height: 32px;
+      height: clamp(20px, 3vw, 36px);
       width: auto;
       position: absolute;
       left: 25px;
@@ -71,9 +75,9 @@
     }
 
     .header h1 {
-      font-size: 16px;
+      font-size: clamp(14px, 1.8vw, 18px);
       text-transform: uppercase;
-      letter-spacing: 4px;
+      letter-spacing: 0.35em;
       margin: 0 auto; 
       font-weight: 800;
       color: var(--current-header-text); 
@@ -83,46 +87,47 @@
 
     .main-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.1fr;
       background: linear-gradient(to right, #0f0f0f 0%, #121212 50%, #080808 100%);
+      flex-grow: 1;
     }
 
     .input-section {
-      padding: 35px;
+      padding: 3% 4%;
       display: grid;
-      gap: 20px;
+      gap: 1.2rem;
       border-right: var(--border);
     }
 
     .input-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 1rem;
     }
 
     .field-wrap {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.4rem;
     }
 
     label {
-      font-size: 10px;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.1em;
     }
 
     input, select {
       background: #151515;
       border: 1px solid #2a2a2a;
       color: #fff;
-      padding: 12px;
+      padding: 0.7rem;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 0.9rem;
       outline: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       appearance: none;
       -webkit-appearance: none;
     }
@@ -131,8 +136,8 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
-      background-size: 16px;
-      padding-right: 40px;
+      background-size: 1rem;
+      padding-right: 2.5rem;
       cursor: pointer;
     }
 
@@ -156,15 +161,14 @@
     }
 
     .goal-hint {
-      font-size: 11px;
+      font-size: 0.8rem;
       color: #666;
-      margin-top: 4px;
+      margin-top: 0.2rem;
       font-weight: 500;
-      letter-spacing: 0.3px;
     }
 
     .result-section {
-      padding: 35px;
+      padding: 3% 4%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -172,84 +176,81 @@
     }
 
     .result-label {
-      font-size: 11px;
+      font-size: 0.75rem;
       color: var(--current-accent);
       font-weight: 800;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
+      letter-spacing: 0.25em;
+      margin-bottom: 0.4rem;
       text-shadow: 0 0 8px var(--current-glow);
-      transition: all 0.3s ease;
     }
 
     .payout-main {
-      font-size: 56px;
+      font-size: clamp(30px, 4.5vw, 60px);
       font-weight: 900;
-      margin: 10px 0;
+      margin: 0.4rem 0;
       color: #fff;
       text-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
     }
 
     .payout-sub {
-      font-size: 12px;
+      font-size: 0.85rem;
       color: var(--text-dim);
-      margin-bottom: 30px;
+      margin-bottom: 1.5rem;
     }
 
     .mini-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 1rem;
     }
 
     .stat-card {
       background: rgba(24, 24, 24, 0.6);
-      padding: 20px;
+      padding: 1.2rem;
       border-radius: 6px;
       border: var(--border);
       backdrop-filter: blur(5px);
     }
 
     .val-green {
-      font-size: 22px;
+      font-size: clamp(15px, 1.6vw, 22px);
       font-weight: 700;
       color: var(--accent-green);
       text-shadow: 0 0 10px rgba(36, 211, 155, 0.4);
     }
 
     .val-gold {
-      font-size: 22px;
+      font-size: clamp(15px, 1.6vw, 22px);
       font-weight: 700;
       color: var(--accent-gold);
       text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
     }
 
     .lbl {
-      font-size: 10px;
+      font-size: 0.65rem;
       color: var(--text-dim);
       text-transform: uppercase;
-      margin-top: 8px;
-      letter-spacing: 1px;
+      margin-top: 0.4rem;
+      letter-spacing: 0.1em;
     }
 
-    /* UPDATED BOLD RED DISCLAIMER */
     .footer-note {
-      padding: 20px 35px;
-      font-size: 14px; 
-      color: var(--afex-red); /* Set to Brand Red */
-      font-weight: bold; /* Set to Bold */
+      padding: 1.2rem 3%;
+      font-size: clamp(10px, 1.1vw, 14px); 
+      color: var(--afex-red);
+      font-weight: bold;
       text-align: center;
-      letter-spacing: 0.5px;
       border-top: var(--border);
       background: rgba(255, 255, 255, 0.1); 
       border-left: 5px solid var(--afex-red);
+      text-shadow: 0 0 10px rgba(201, 6, 58, 0.3);
       line-height: 1.4;
-      text-shadow: 0 0 10px rgba(201, 6, 58, 0.3); /* Added complementary glow */
     }
 
     @media (max-width: 800px) {
       .main-layout { grid-template-columns: 1fr; }
-      .header img { position: static; margin-bottom: 15px; }
-      .header { flex-direction: column; padding: 25px; }
+      .header img { position: static; margin-bottom: 12px; }
+      .header { flex-direction: column; padding: 20px; }
       .input-section { border-right: none; border-bottom: var(--border); }
       .footer-note { border-left: none; border-top: 5px solid var(--afex-red); }
     }
