@@ -6,356 +6,356 @@
   <title>AFEX Commission Calculator</title>
 
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#101a33;
-      --muted:#93a4c7;
-      --text:#e8eeff;
-      --accent:#ff3b3b;
-      --accent2:#24d39b;
-      --border:rgba(255,255,255,.10);
-      --shadow: 0 12px 40px rgba(0,0,0,.35);
-      --radius:18px;
-      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    :root {
+      --bg: #050505;
+      --card-bg: #0f0f0f;
+      --header-bg: #161616;
+      --text-main: #ffffff;
+      --text-dim: #888888;
+      --border: 1px solid rgba(255, 255, 255, 0.08);
+      
+      /* Brand Colors */
+      --afex-red: #C9063A;
+      --accent-silver: #c0c0c0;
+      --accent-gold: #d4af37;
+      --accent-diamond: #00d9ff; 
+      --accent-green: #24d39b;
+
+      /* Dynamic Variables */
+      --current-accent: var(--accent-silver);
+      --current-header-text: #ffffff;
+      --current-glow: rgba(255, 255, 255, 0.1); 
+      --logo-filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
     }
 
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      font-family:var(--sans);
-      background:
-        radial-gradient(900px 450px at 12% 10%, rgba(255,59,59,.18), transparent 55%),
-        radial-gradient(800px 420px at 88% 12%, rgba(36,211,155,.14), transparent 55%),
-        radial-gradient(1000px 520px at 50% 100%, rgba(147,164,199,.10), transparent 60%),
-        var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      padding:28px;
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    .wrap{
-      width:min(1100px,100%);
-      display:grid;
-      gap:18px;
+    .calc-container {
+      width: 100%;
+      max-width: 900px; 
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: var(--border);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ===== HEADER ===== */
-    .header{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      align-items:center;
-      padding:18px 22px;
-      gap:18px;
+    .header {
+      background: var(--header-bg);
+      padding: 20px 25px;
+      display: flex;
+      align-items: center;
+      border-bottom: var(--border);
+      position: relative;
     }
 
-    .logo-wrap{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:radial-gradient(circle at center, rgba(255,255,255,.10), rgba(0,0,0,.35));
+    .header img {
+      height: 32px;
+      width: auto;
+      position: absolute;
+      left: 25px;
+      filter: var(--logo-filter);
+      transition: filter 0.4s ease;
     }
 
-    .logo-wrap img{
-      height:44px;
-      width:auto;
-      object-fit:contain;
-      filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    .header h1 {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 0 auto; 
+      font-weight: 800;
+      color: var(--current-header-text); 
+      text-shadow: 0 0 15px var(--current-glow);
+      transition: all 0.4s ease;
     }
 
-    .title-center{
-      text-align:center;
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: linear-gradient(to right, #0f0f0f 0%, #121212 50%, #080808 100%);
     }
 
-    h1{
-      margin:0;
-      font-size:24px;
-      letter-spacing:.3px;
+    .input-section {
+      padding: 35px;
+      display: grid;
+      gap: 20px;
+      border-right: var(--border);
     }
 
-    .sub{
-      margin-top:6px;
-      font-size:13px;
-      color:var(--muted);
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
-    @media(max-width:800px){
-      .header{
-        grid-template-columns:1fr;
-        text-align:center;
-      }
-      .logo-wrap{
-        margin:0 auto;
-      }
+    .field-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    /* ===== CARD ===== */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+    label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:18px;
-      padding:18px;
+    input, select {
+      background: #151515;
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
+    input:focus, select:focus {
+      border-color: var(--current-accent);
+      box-shadow: 0 0 15px var(--current-glow);
     }
 
-    .title{
-      padding:14px 16px;
-      border-bottom:1px solid var(--border);
-      text-transform:uppercase;
-      font-size:13px;
-      letter-spacing:.4px;
+    .goal-hint {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
-    .content{
-      padding:16px;
-      display:grid;
-      gap:12px;
+    .result-section {
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
     }
 
-    label{
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-      display:block;
+    .result-label {
+      font-size: 11px;
+      color: var(--current-accent);
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 8px var(--current-glow);
+      transition: all 0.3s ease;
     }
 
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
+    .payout-main {
+      font-size: 56px;
+      font-weight: 900;
+      margin: 10px 0;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
     }
 
-    @media(max-width:520px){
-      .row{grid-template-columns:1fr}
+    .payout-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 30px;
     }
 
-    /* ===== INPUTS ===== */
-    select, input{
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.15);
-      background:#0b1220;
-      color:#fff;
-      font-size:14px;
+    .mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
-    input::placeholder{color:#6f7ea8}
-
-    select{
-      appearance:none;
-      border-color:rgba(255,59,59,.6);
-      background-image:
-        linear-gradient(45deg, transparent 50%, #ff3b3b 50%),
-        linear-gradient(135deg, #ff3b3b 50%, transparent 50%);
-      background-position:
-        calc(100% - 18px) 50%,
-        calc(100% - 12px) 50%;
-      background-size:6px 6px;
-      background-repeat:no-repeat;
+    .stat-card {
+      background: rgba(24, 24, 24, 0.6);
+      padding: 20px;
+      border-radius: 6px;
+      border: var(--border);
+      backdrop-filter: blur(5px);
     }
 
-    select option{
-      background:#101a33;
-      color:#fff;
+    .val-green {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-green);
+      text-shadow: 0 0 10px rgba(36, 211, 155, 0.4);
     }
 
-    select:focus, input:focus{
-      outline:none;
-      border-color:#ff3b3b;
-      box-shadow:0 0 0 3px rgba(255,59,59,.25);
+    .val-gold {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
     }
 
-    .hint{
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px dashed rgba(255,255,255,.14);
-      background:rgba(255,255,255,.02);
-      font-size:12px;
-      color:var(--muted);
+    .lbl {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 8px;
+      letter-spacing: 1px;
     }
 
-    /* ===== RESULTS ===== */
-    .big{
-      padding:16px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.16);
-      background:
-        radial-gradient(600px 200px at 10% 20%, rgba(255,59,59,.20), transparent 60%),
-        rgba(255,255,255,.03);
+    .footer-note {
+      padding: 16px;
+      font-size: 10px;
+      color: #333;
+      text-align: center;
+      letter-spacing: 0.5px;
+      border-top: var(--border);
+      background: #080808;
     }
 
-    .big .amount{
-      font-size:34px;
-      font-weight:800;
-      margin-bottom:6px;
+    @media (max-width: 800px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .header img { position: static; margin-bottom: 15px; }
+      .header { flex-direction: column; padding: 25px; }
+      .input-section { border-right: none; border-bottom: var(--border); }
     }
-
-    .kpis{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .kpi{
-      padding:14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-    }
-
-    .kpi .k{font-size:12px;color:var(--muted)}
-    .kpi .v{font-size:22px;font-weight:700}
-
-    /* ===== DISCLAIMER ===== */
-    .disclaimer{
-      margin:18px;
-      padding:14px 16px;
-      border-radius:14px;
-      border:1px solid rgba(255,59,59,.6);
-      background:rgba(255,59,59,.10);
-      color:#ff3b3b;
-      font-size:20px;
-      line-height:1.45;
-    }
-
-    .disclaimer strong{color:#fff}
   </style>
 </head>
-
 <body>
-  <div class="wrap card">
 
-    <!-- HEADER -->
-    <div class="header">
-      <div class="logo-wrap">
-        <img src="https://cdn.emailacademy.com/user/572ce4f73e2234c9b87b3cd8c7b01995def56563f3d2ee6f30b09e63b46a9eee/Asset%2072026_01_21_14_15_10.png" alt="AFEX Logo">
-      </div>
-
-      <div class="title-center">
-        <h1>AFEX Commission Calculator</h1>
-        <div class="sub">Estimate commission based on position, units, and funded volume.</div>
-      </div>
-
-      <div></div>
-    </div>
-
-    <!-- MAIN -->
-    <div class="grid">
-
-      <!-- INPUTS -->
-      <section class="card">
-        <div class="title">Inputs</div>
-        <div class="content">
-
-          <div class="row">
-            <div>
-              <label>Position</label>
-              <select id="position">
-                <option value="LO">Loan Officer (LO)</option>
-                <option value="SrLO">Senior Loan Officer (Sr LO)</option>
-                <option value="ExLO">Executive Loan Officer (Ex LO)</option>
-                <option value="CCS">Client Care Specialist (CCS)</option>
-                <option value="SrCCS">Senior CCS (Sr CCS)</option>
-                <option value="FounderLO">Founder LO (Elite Tier)</option>
-              </select>
-            </div>
-            <div>
-              <label>Funded Units</label>
-              <input id="units" type="number" placeholder="e.g. 6">
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label>Total Loan Volume ($)</label>
-              <input id="volume" placeholder="1,250,000">
-            </div>
-            <div>
-              <label>Goal Attainment</label>
-              <select id="attain">
-                <option value="100">100%</option>
-                <option value="125">125%</option>
-                <option value="150">150%</option>
-                <option value="200">200%</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="hint" id="goalHint"></div>
-        </div>
-      </section>
-
-      <!-- RESULTS -->
-      <section class="card">
-        <div class="title">Results</div>
-        <div class="content">
-          <div class="big">
-            <div class="amount" id="totalPayout">$0.00</div>
-            <div id="breakdown" class="hint">Enter values to calculate.</div>
-          </div>
-
-          <div class="kpis">
-            <div class="kpi">
-              <div class="k">Base Commission</div>
-              <div class="v" id="baseComm">$0</div>
-            </div>
-            <div class="kpi">
-              <div class="k">Bonus</div>
-              <div class="v" id="bonusPayout">$0</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="disclaimer">
-      <strong>DISCLAIMER:</strong> THIS DOES NOT INCLUDE <strong>ANY SHORTAGES.</strong>
-      Commission is estimated — <strong>see your director for any shortages taken.</strong>
-    </div>
-
+<div class="calc-container">
+  <div class="header">
+    <img src="https://cdn.emailacademy.com/user/572ce4f73e2234c9b87b3cd8c7b01995def56563f3d2ee6f30b09e63b46a9eee/Asset%2072026_01_21_14_15_10.png" alt="AFEX Logo">
+    <h1 id="tierTitle">AFEX Commission Calculator</h1>
   </div>
 
+  <div class="main-layout">
+    <div class="input-section">
+      <div class="field-wrap">
+        <label>Role Selection</label>
+        <select id="position">
+          <option value="CCS">Client Care Specialist</option>
+          <option value="SrCCS">Sr. Client Care Specialist</option>
+          <option value="LO">Loan Officer</option>
+          <option value="SrLO">Sr. Loan Officer</option>
+          <option value="ExLO">Executive Loan Officer</option>
+          <option value="FounderLO">Founder Elite</option>
+        </select>
+      </div>
+
+      <div class="input-row">
+        <div class="field-wrap">
+          <label>Funded Units</label>
+          <input id="units" type="number" placeholder="0">
+        </div>
+        <div class="field-wrap">
+          <label>Attainment</label>
+          <select id="attain">
+            <option value="100">100%</option>
+            <option value="125">125%</option>
+            <option value="150">150%</option>
+            <option value="200">200%</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-wrap">
+        <label>Total Loan Volume ($)</label>
+        <input id="volume" type="text" placeholder="1,250,000">
+        <div id="goalText" class="goal-hint">Submission Goal: 7 subs/month</div>
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-label" id="resultLabel">ESTIMATED PAYOUT</div>
+      <div class="payout-main" id="totalPayout">$0.00</div>
+      <div class="payout-sub" id="breakdown">Enter details to calculate</div>
+
+      <div class="mini-stats">
+        <div class="stat-card">
+          <div class="val-green" id="baseComm">$0</div>
+          <div class="lbl">Base Commission</div>
+        </div>
+        <div class="stat-card">
+          <div class="val-gold" id="bonusPayout">$0</div>
+          <div class="lbl">Goal Bonus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Final value does not include any shortages. Commission is estimated, see your director for any shortages taken.
+  </div>
+</div>
+
 <script>
-  const goals={LO:"Submission Goal: 12 subs/month",SrLO:"Submission Goal: 14 subs/month",ExLO:"Submission Goal: 16 subs/month",CCS:"Submission Goal: 7 subs/month",SrCCS:"Submission Goal: 10 subs/month",FounderLO:"Elite Tier Qualifications Apply"};
   const bps={LO:[[1,2,55],[3,5,65],[6,8,75],[9,99,85]],SrLO:[[1,2,60],[3,5,70],[6,8,80],[9,99,90]],ExLO:[[1,2,65],[3,5,75],[6,8,85],[9,99,95]],CCS:[[1,2,45],[3,5,55],[6,8,65],[9,99,75]],SrCCS:[[1,2,55],[3,5,65],[6,8,75],[9,99,85]],FounderLO:[[0,7,100],[8,99,125]]};
   const bonus={LO:{125:600,150:1050,200:1550},SrLO:{125:650,150:1250,200:2250},ExLO:{125:900,150:1500,200:2750},CCS:{125:350,150:650,200:1000},SrCCS:{125:550,150:850,200:1250}};
-  const $=id=>document.getElementById(id);
+  const goals={CCS:"Submission Goal: 7 subs/month",SrCCS:"Submission Goal: 10 subs/month",LO:"Submission Goal: 12 subs/month",SrLO:"Submission Goal: 14 subs/month",ExLO:"Submission Goal: 16 subs/month",FounderLO:"Elite Tier Qualifications Apply"};
+  
+  const $ = id => document.getElementById(id);
+  const root = document.documentElement;
 
-  function calc(){
-    const p=$("position").value;
-    const u=+$("units").value||0;
-    const v=+($("volume").value||"").replace(/[^0-9]/g,"");
-    $("goalHint").textContent=goals[p]||"";
+  function updateTheme(p) {
+    let accent = "#c0c0c0"; 
+    let headerText = "#ffffff";
+    let glowColor = "rgba(255, 255, 255, 0.1)";
+    let logoFilter = "brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))";
 
-    let rate=0;(bps[p]||[]).forEach(t=>{if(u>=t[0]&&u<=t[1])rate=t[2]});
-    const base=v*(rate/10000);
-    const bon=bonus[p]?.[$("attain").value]||0;
+    // Red theme for Loan Officer (standard) and Sr. Loan Officer
+    if (p !== "CCS" && p !== "SrCCS") {
+      logoFilter = "invert(12%) sepia(91%) saturate(5833%) hue-rotate(341deg) brightness(81%) contrast(104%) drop-shadow(0 0 8px rgba(201, 6, 58, 0.5))";
+      
+      if (p === "SrLO") {
+        accent = "#C9063A";
+        headerText = "#C9063A";
+        glowColor = "rgba(201, 6, 58, 0.4)";
+      }
+    }
 
-    $("baseComm").textContent=base.toLocaleString("en-US",{style:"currency",currency:"USD"});
-    $("bonusPayout").textContent=bon.toLocaleString("en-US",{style:"currency",currency:"USD"});
-    $("totalPayout").textContent=(base+bon).toLocaleString("en-US",{style:"currency",currency:"USD"});
-    $("breakdown").textContent=`${u} units • ${rate} BPS`;
+    if (p === "ExLO") { 
+      accent = "#d4af37"; 
+      headerText = "#d4af37";
+      glowColor = "rgba(212, 175, 55, 0.4)"; 
+    } 
+    else if (p === "FounderLO") { 
+      accent = "#00d9ff"; 
+      headerText = "#00d9ff";
+      glowColor = "rgba(0, 217, 255, 0.5)"; 
+    }
+
+    root.style.setProperty('--current-accent', accent);
+    root.style.setProperty('--current-header-text', headerText);
+    root.style.setProperty('--current-glow', glowColor);
+    root.style.setProperty('--logo-filter', logoFilter);
   }
 
-  ["position","units","volume","attain"].forEach(i=>$(i).addEventListener("input",calc));
-  calc();
+  function calc() {
+    const p = $("position").value;
+    const u = +$("units").value || 0;
+    const v = +($("volume").value || "").replace(/[^0-9]/g, "");
+    
+    updateTheme(p);
+    $("goalText").textContent = goals[p];
+
+    let rate = 0;
+    (bps[p] || []).forEach(t => { if(u >= t[0] && u <= t[1]) rate = t[2]; });
+    
+    const base = v * (rate / 10000);
+    const bon = bonus[p]?.[$("attain").value] || 0;
+
+    $("baseComm").textContent = base.toLocaleString("en-US", {style: "currency", currency: "USD", maximumFractionDigits: 0});
+    $("bonusPayout").textContent = bon.toLocaleString("en-US", {style: "currency", currency: "USD", maximumFractionDigits: 0});
+    $("totalPayout").textContent = (base + bon).toLocaleString("en-US", {style: "currency", currency: "USD"});
+    $("breakdown").textContent = `${u} Units @ ${rate} BPS`;
+  }
+
+  ["position", "units", "volume", "attain"].forEach(i => $(i).addEventListener("input", calc));
+  calc(); 
 </script>
 
 </body>
